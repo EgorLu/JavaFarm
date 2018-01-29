@@ -7,6 +7,7 @@ public abstract class Creature {
 	private int health;
 	private int legs;
 	private int age;
+	private Enclosure enclosure;
 
 	/* Constructors */
 
@@ -56,6 +57,22 @@ public abstract class Creature {
 	}
 
 	public abstract <food> void eat(food f);
+	// TODO implement omnivore, carnivore and herbivore 
+	
+	/* Private methods */
+	
+	protected <food> boolean omnivoreCheck(food f) {
+		return f.getClass().getSuperclass().getSuperclass().getSuperclass().getSimpleName().equals("Creature")
+				|| f.getClass().getSuperclass().getSuperclass().getSimpleName().equals("Plant");
+	}
+	
+	protected <food> boolean carnivoreCheck(food f) {
+		return f.getClass().getSuperclass().getSuperclass().getSuperclass().getSimpleName().equals("Creature");
+	}
+	
+	protected <food> boolean herbivoreCheck(food f) {
+		return f.getClass().getSuperclass().getSuperclass().getSimpleName().equals("Plant");
+	}
 	
 	/* Getter & Setters */
 
@@ -97,6 +114,16 @@ public abstract class Creature {
 
 	public void setAge(int age) {
 		this.age = age;
+	}
+
+
+	public Enclosure getEnclosure() {
+		return enclosure;
+	}
+
+	
+	public void setEnclosure(Enclosure enclosure) {
+		this.enclosure = enclosure;
 	}
 
 }

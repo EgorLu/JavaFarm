@@ -16,13 +16,17 @@ public class Farm {
 		Enclosure enc1 = new Enclosure("Reptile House");
 		Animal snake1 = new Snake("John");
 		Animal snake2 = new Snake("Lola");
+		Human human1 = new Human("Carlos");
 		
 		enc1.addAnimal(snake1);
 		enc1.addAnimal(snake2);
 		enc1.printAnimals();
 		
 		snake1.makeNoise();
+		
 		snake1.eat(snake2);
+		enc1.printAnimals();
+		human1.eat(snake1);
 	}
 
 }
