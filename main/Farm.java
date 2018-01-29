@@ -13,10 +13,16 @@ public class Farm {
 
 	public static void main(String[] args) {
 
-		Enclosure test = new Enclosure("Reptile House");
+		Enclosure enc1 = new Enclosure("Reptile House");
 		Animal snake1 = new Snake("John");
-		test.addAnimal(snake1);
-		test.printAnimals();
+		Animal snake2 = new Snake("Lola");
+		
+		enc1.addAnimal(snake1);
+		enc1.addAnimal(snake2);
+		enc1.printAnimals();
+		
+		snake1.makeNoise();
+		snake1.eat(snake2);
 	}
 
 }

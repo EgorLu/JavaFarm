@@ -1,8 +1,6 @@
 package animals;
 
-import main.Animal;
-
-public class Snake extends Animal{
+public class Snake extends Reptile {
 
 	public Snake(String name) {
 		super(name, 0);
@@ -11,12 +9,16 @@ public class Snake extends Animal{
 	@Override
 	public void makeNoise() {
 		System.out.println("Tsss...");
-		
+
 	}
 
 	@Override
-	public void eat() {
-		System.out.println("Snake eats");
+	public <food> void eat(food f) {
+		if (f.getClass().getSuperclass().getSuperclass().getSimpleName().equals("Animal")) {
+			System.out.println(this + " eats " + f);
+		} else {
+			System.out.println("Snakes eat other animals.");
+		}
 	}
-	
+
 }
