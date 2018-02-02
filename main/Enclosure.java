@@ -12,7 +12,7 @@ public class Enclosure {
 	 * Empty constructor
 	 */
 	public Enclosure(String name) {
-		this.name = name;
+		this.name = new String(name);
 		this.livestock = new Animal[0];
 		this.people = new Human[0];
 	}
@@ -56,7 +56,7 @@ public class Enclosure {
 
 	}
 
-	public void printAnimals() {
+	public void listAnimals() {
 		System.out.println(name + " has " + livestock.length + " next animals: ");
 		for (int i = 0; i < livestock.length; i++) {
 			System.out.println((i + 1) + ". " + livestock[i]);
@@ -70,7 +70,7 @@ public class Enclosure {
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.name = new String(name);
 	}
 
 	public Animal getAnimal(int i) {
@@ -79,6 +79,10 @@ public class Enclosure {
 
 	public Human getHuman(int i) {
 		return people[i];
+	}
+
+	public String toString() {
+		return "Enclosure \"" + name + "\".";
 	}
 
 }

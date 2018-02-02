@@ -1,6 +1,8 @@
 package main;
 
-import animals.*;
+import java.util.Scanner;
+
+import utils.Stack;
 
 /*
  * Livestock can include food animals such as cattle, sheep and pigs,
@@ -11,22 +13,50 @@ import animals.*;
 
 public class Farm {
 
-	public static void main(String[] args) {
+	private String name;
+	private Stack<Enclosure> enclosures;
+	private Scanner scan;
 
-		Enclosure enc1 = new Enclosure("Reptile House");
-		Animal snake1 = new Snake("John");
-		Animal snake2 = new Snake("Lola");
-		Human human1 = new Human("Carlos");
-		
-		enc1.addAnimal(snake1);
-		enc1.addAnimal(snake2);
-		enc1.printAnimals();
-		
-		snake1.makeNoise();
-		
-		snake1.eat(snake2);
-		enc1.printAnimals();
-		human1.eat(snake1);
+	public Farm(String name, Scanner scan) {
+		this.name = new String(name);
+		this.enclosures = new Stack<Enclosure>();
+		this.scan = scan;
 	}
 
+	public void addEnclosure() {
+		System.out.println("Enter the enclosure's name:");
+		String name = scan.next();
+		enclosures.push(new Enclosure(name));
+	}
+
+	public void listEnclosures() {
+		System.out.println("\"" + getName() + "\"'s enclosures:");
+		System.out.println(enclosures);
+	}
+
+	public boolean rename() {
+		System.out.println("New farm name: ");
+		setName(scan.next());
+		System.out.println("Farm renamed to: " + getName());
+		return true;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = new String(name);
+	}
+
+	public Enclosure getEnclosure() {
+		if (enclosures.isEmpty()) {
+			System.out.println("There are no enclosures to edit.");
+		} else {
+			System.out.println("Enter the id of the enclosure:");
+			int choice = scan.nextInt() - 1;
+			return enclosures.getItemAt(choice);
+		}
+		return null;
+	}
 }
