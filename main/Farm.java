@@ -59,4 +59,61 @@ public class Farm {
 		}
 		return null;
 	}
+
+	public void drawFarm() {
+		System.out.println("\t" + name);
+		int i = 0;
+		// Top
+		drawFullLine(i);
+		// Mid
+		drawEmptyLine();
+		if (!enclosures.isEmpty()) {
+			drawEnclosureTop();
+			drawEnclosureMid();
+			drawEnclosureBot();
+		}
+		drawEmptyLine();
+		// Bot
+		drawFullLine(i);
+	}
+
+	private void drawEmptyLine() {
+		System.out.print("\t|  ");
+		for (int j = 0; j < enclosures.size(); j++) {
+			System.out.print("      ");
+		}
+		System.out.println("  |");
+	}
+
+	private void drawEnclosureTop() {
+		System.out.print("\t|  ");
+		for (int j = 0; j < enclosures.size(); j++) {
+			System.out.print(" |--| ");
+		}
+		System.out.println("  |");
+	}
+
+	private void drawEnclosureMid() {
+		System.out.print("\t|  ");
+		for (int j = 0; j < enclosures.size(); j++) {
+			System.out.print(" |" + (enclosures.getItemAt(j).isEmpty() ? "  " : "**") + "| ");
+		}
+		System.out.println("  |");
+	}
+
+	private void drawEnclosureBot() {
+		System.out.print("\t|  ");
+		for (int j = 0; j < enclosures.size(); j++) {
+			System.out.print(" |--| ");
+		}
+		System.out.println("  |");
+	}
+
+	private void drawFullLine(int i) {
+		System.out.print("\t|--");
+		for (i = 0; i < enclosures.size(); i++) {
+			System.out.print("------");
+		}
+		System.out.println("--|");
+	}
 }

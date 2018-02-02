@@ -85,4 +85,7 @@ public class Enclosure {
 		return "Enclosure \"" + name + "\".";
 	}
 
+	public boolean isEmpty() {
+		return livestock.length == 0;
+	}
 }

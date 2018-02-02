@@ -48,14 +48,18 @@ public class Menu {
 			System.out.println("---Farm manipulation menu \"" + farm.getName() + "\"");
 			System.out.println("Please choose an action:");
 			System.out.println("1. Rename farm.");
+			System.out.println("2. Draw farm.");
 			System.out.println("0. Back to main menu.");
 
 			choice = scan.nextInt();
-		} while (choice < 0 || choice > 1);
+		} while (choice < 0 || choice > 2);
 
 		switch (choice) {
 		case 1:
 			farm.rename(); // Rename.
+			break;
+		case 2:
+			farm.drawFarm();; // Rename.
 			break;
 		case 0:
 			mainMenu();
