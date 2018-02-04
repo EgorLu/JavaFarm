@@ -76,7 +76,7 @@ public class Stack<T> {
 		String result = new String();
 		if (!isEmpty()) {
 			for (int i = 0; i < items.length; i++) {
-				result += (i+1) + ". " + items[i] + "\n";
+				result += (i + 1) + ". " + items[i] + "\n";
 			}
 		}
 		return result;
@@ -84,5 +84,22 @@ public class Stack<T> {
 
 	public T getItemAt(int i) {
 		return items[i];
+	}
+
+	@SuppressWarnings("unchecked")
+	public void removeItem(T item) {
+		T[] tempArr = (T[]) new Object[--size]; // Create temp array and decrement "size".
+		boolean skip = false;
+		for (int i = 0; i < items.length - 1; i++) {
+			if (items[i] == item) {// If the item to be deleted is found...
+				skip = true; // Skip it and add the next to the new array.
+			}
+			if (!skip) {
+				tempArr[i] = items[i];
+			} else {
+				tempArr[i] = items[i + 1];
+			}
+		}
+		items = tempArr;
 	}
 }

@@ -19,7 +19,7 @@ public class Menu {
 		choice = 0;
 
 		do {
-			System.out.println("---Main menu");
+			System.out.println("\n---Main menu");
 			System.out.println("Please choose an action:");
 			System.out.println("1. Farm manipulation.");
 			System.out.println("2. Enclosure manipulation.");
@@ -45,7 +45,7 @@ public class Menu {
 		choice = 0;
 
 		do {
-			System.out.println("---Farm manipulation menu \"" + farm.getName() + "\"");
+			System.out.println("\n---Farm manipulation menu \"" + farm.getName() + "\"");
 			System.out.println("Please choose an action:");
 			System.out.println("1. Rename farm.");
 			System.out.println("2. Draw farm.");
@@ -59,7 +59,8 @@ public class Menu {
 			farm.rename(); // Rename.
 			break;
 		case 2:
-			farm.drawFarm();; // Rename.
+			farm.drawFarm();
+			; // Draw farm.
 			break;
 		case 0:
 			mainMenu();
@@ -72,7 +73,7 @@ public class Menu {
 		choice = 0;
 
 		do {
-			System.out.println("---Enclosure manipulation menu");
+			System.out.println("\n---Enclosure manipulation menu");
 			System.out.println("Please choose an action:");
 			System.out.println("1. List enclosures.");
 			System.out.println("2. Edit enclosure.");
@@ -105,36 +106,39 @@ public class Menu {
 		choice = 0;
 
 		do {
-			System.out.println("---Enclosure edit menu");
+			System.out.println("\n---Enclosure edit menu \"" + enc.getName() + "\"");
 			System.out.println("Please choose an action:");
 			System.out.println("1. Remove enclosure.");
 			System.out.println("2. Rename enclosure.");
 			System.out.println("3. List animals.");
 			System.out.println("4. Edit animal.");
 			System.out.println("5. Add animal.");
-			System.out.println("0. Back to main menu.");
+			System.out.println("0. Back to enclosure menu.");
 
 			choice = scan.nextInt();
 		} while (choice < 0 || choice > 5);
 
 		switch (choice) {
 		case 1:
-			// TODO
+			farm.removeEnclosure(enc);
+			enclosureMenu();
 			break;
 		case 2:
-			// TODO
+			enc.rename();
 			break;
 		case 3:
 			enc.listAnimals();
 			break;
 		case 4:
-			animalEditMenu();
+			Animal ani = enc.selectAnimal();
+			if (ani != null)
+				animalEditMenu(enc, ani);
 			break;
 		case 5:
 			animalAddMenu(enc);
 			break;
 		case 0:
-			mainMenu();
+			enclosureMenu();
 			break;
 		}
 		enclosureEditMenu(enc);
@@ -144,11 +148,11 @@ public class Menu {
 		choice = 0;
 
 		do {
-			System.out.println("---Animal add menu");
+			System.out.println("\n---Animal add menu");
 			System.out.println("Please choose an action:");
 			System.out.println("1. List animal types.");
 			System.out.println("2. Create an animal.");
-			System.out.println("0. Back to main menu.");
+			System.out.println("0. Back to enclosure edit menu.");
 
 			choice = scan.nextInt();
 		} while (choice < 0 || choice > 2);
@@ -159,16 +163,17 @@ public class Menu {
 			break;
 		case 2:
 			enc.addAnimal(createAnimal());
+			enclosureEditMenu(enc);
 			break;
 		case 0:
-			mainMenu();
+			enclosureEditMenu(enc);
 			break;
 		}
 		animalAddMenu(enc);
 	}
 
 	private void listAnimalTypes(Enclosure enc) {
-		System.out.println("---Possible animal types:");
+		System.out.println("\n---Possible animal types:");
 		System.out.println("--Mammals:"); // Mammals
 		System.out.println("Cow");
 		System.out.println("Horse");
@@ -193,31 +198,41 @@ public class Menu {
 		type = type.toLowerCase(); // Transform to lower-case to ease the checks.
 		switch (type) {
 		case "cow":
+			System.out.println(type + " will be added in the next game expantion. Preorder for $59.99.");
 			break;
 		case "horse":
+			System.out.println(type + " will be added in the next game expantion. Preorder for $59.99.");
 			break;
 		case "pig":
+			System.out.println(type + " will be added in the next game expantion. Preorder for $59.99.");
 			break;
 		case "sheep":
+			System.out.println(type + " will be added in the next game expantion. Preorder for $59.99.");
 			break;
 		case "goat":
+			System.out.println(type + " will be added in the next game expantion. Preorder for $59.99.");
 			break;
 		case "chicken":
+			System.out.println(type + " will be added in the next game expantion. Preorder for $59.99.");
 			break;
 		case "hawk":
+			System.out.println(type + " will be added in the next game expantion. Preorder for $59.99.");
 			break;
 		case "snake":
 			newAnimal = new Snake(name);
+			break;
+		default:
+			System.out.println("No such animal type.");
 			break;
 		}
 		return newAnimal;
 	}
 
-	private void animalEditMenu() {
+	private void animalEditMenu(Enclosure enc, Animal ani) {
 		choice = 0;
 
 		do {
-			System.out.println("---Animal edit menu");
+			System.out.println("\n---Animal edit menu");
 			System.out.println("Please choose an action:");
 			System.out.println("1. Remove animal.");
 			System.out.println("2. Rename animal.");
@@ -229,13 +244,14 @@ public class Menu {
 
 		switch (choice) {
 		case 1:
-			// TODO
+			enc.removeAnimal(ani);
+			enclosureEditMenu(enc);
 			break;
 		case 2:
-			// TODO
+			ani.rename(scan);
 			break;
 		case 0:
-			mainMenu();
+			enclosureEditMenu(enc);
 			break;
 		}
 	}
@@ -244,7 +260,7 @@ public class Menu {
 		choice = 0;
 
 		do {
-			System.out.println("---Human manipulation menu");
+			System.out.println("\n---Human manipulation menu");
 			System.out.println("Please choose an action:");
 			System.out.println("1. List humans.");
 			System.out.println("2. Edit human.");
@@ -256,17 +272,50 @@ public class Menu {
 
 		switch (choice) {
 		case 1:
-			// TODO
+			farm.listPeople();
 			break;
 		case 2:
-			// TODO
+			Human hum = farm.selectHuman();
+			if (hum != null)
+				humanEditMenu(hum);
 			break;
 		case 3:
-			// TODO
+			farm.addHuman();
 			break;
 		case 0:
 			mainMenu();
 			break;
 		}
+
+		humanMenu();
+	}
+
+	private void humanEditMenu(Human hum) {
+		choice = 0;
+
+		do {
+			System.out.println("\n---Human edit menu \"" + hum.getName() + "\"");
+			System.out.println("Please choose an action:");
+			System.out.println("1. Rename human.");
+			System.out.println("2. Remove human.");
+			System.out.println("0. Back to main menu.");
+
+			choice = scan.nextInt();
+		} while (choice < 0 || choice > 2);
+
+		switch (choice) {
+		case 1:
+			hum.rename(scan);
+			break;
+		case 2:
+			farm.removeHuman(hum);
+			humanMenu();
+			break;
+		case 0:
+			humanMenu();
+			break;
+		}
+
+		humanEditMenu(hum);
 	}
 }

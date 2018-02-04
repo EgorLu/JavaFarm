@@ -1,20 +1,26 @@
 package main;
 
+import java.util.Scanner;
+
+import utils.Stack;
+
 public class Enclosure {
 
 	private String name;
-	private Animal[] livestock;
-	private Human[] people;
+	private Stack<Animal> livestock;
+	private Stack<Human> people;
+	private Scanner scan;
 
 	/* Constructors */
 
 	/**
 	 * Empty constructor
 	 */
-	public Enclosure(String name) {
+	public Enclosure(String name, Scanner scan) {
 		this.name = new String(name);
-		this.livestock = new Animal[0];
-		this.people = new Human[0];
+		this.livestock = new Stack<Animal>();
+		this.people = new Stack<Human>();
+		this.scan = scan;
 	}
 
 	/**
@@ -28,41 +34,36 @@ public class Enclosure {
 
 	/* Public methods */
 	public void addAnimal(Animal animal) {
-		Animal[] newArray = new Animal[livestock.length + 1];
-		for (int i = 0; i < livestock.length; i++) {
-			newArray[i] = livestock[i];
+		if (animal != null) {
+			animal.setEnclosure(this); // Set the animal's enclosure to this one.
+			livestock.push(animal);
 		}
-		newArray[newArray.length - 1] = animal;
-		livestock = newArray; // Aliasing might be a problem;
-		livestock[livestock.length - 1].setEnclosure(this); // Set the animal's enclosure to this one.
 	}
 
 	public void removeAnimal(Animal animal) {
-		Animal[] newArray = new Animal[livestock.length - 1];
-		boolean shift = false;
-		for (int i = 0; i < livestock.length; i++) {
-			if (livestock[i] == animal) { // Address check
-				shift = true;
-			}
-			if (shift) {
-				if (i < livestock.length - 1) {
-					newArray[i] = livestock[i + 1];
-				}
-			} else {
-				newArray[i] = livestock[i];
-			}
-		}
-		livestock = newArray; // Aliasing might be a problem;
-
+		livestock.removeItem(animal);
 	}
 
 	public void listAnimals() {
-		System.out.println(name + " has " + livestock.length + " next animals: ");
-		for (int i = 0; i < livestock.length; i++) {
-			System.out.println((i + 1) + ". " + livestock[i]);
+		if (livestock.isEmpty()) {
+			System.out.println("The enclosure is empty.");
+		} else {
+			System.out.println(name + " has " + livestock.size() + " next animals: ");
+			System.out.print(livestock);
 		}
 	}
 
+	public Animal selectAnimal() {
+		if (livestock.isEmpty()) {
+			System.out.println("There are no animals to edit.");
+		} else {
+			System.out.println("Enter the id of the animal:");
+			int choice = scan.nextInt() - 1;
+			return livestock.getItemAt(choice);
+		}
+		return null;
+	}
+	
 	/* Getter & Setters */
 
 	public String getName() {
@@ -74,11 +75,11 @@ public class Enclosure {
 	}
 
 	public Animal getAnimal(int i) {
-		return livestock[i];
+		return livestock.getItemAt(i);
 	}
 
 	public Human getHuman(int i) {
-		return people[i];
+		return people.getItemAt(i);
 	}
 
 	public String toString() {
@@ -86,6 +87,12 @@ public class Enclosure {
 	}
 
 	public boolean isEmpty() {
-		return livestock.length == 0;
+		return livestock.isEmpty();
+	}
+
+	public void rename() {
+		System.out.println("New enclosure name: ");
+		setName(scan.next());
+		System.out.println("Farm renamed to: " + getName());
 	}
 }

@@ -15,30 +15,20 @@ public class Farm {
 
 	private String name;
 	private Stack<Enclosure> enclosures;
+	private Stack<Human> people;
 	private Scanner scan;
 
 	public Farm(String name, Scanner scan) {
 		this.name = new String(name);
 		this.enclosures = new Stack<Enclosure>();
+		this.people = new Stack<Human>();
 		this.scan = scan;
 	}
 
-	public void addEnclosure() {
-		System.out.println("Enter the enclosure's name:");
-		String name = scan.next();
-		enclosures.push(new Enclosure(name));
-	}
-
-	public void listEnclosures() {
-		System.out.println("\"" + getName() + "\"'s enclosures:");
-		System.out.println(enclosures);
-	}
-
-	public boolean rename() {
+	public void rename() {
 		System.out.println("New farm name: ");
 		setName(scan.next());
 		System.out.println("Farm renamed to: " + getName());
-		return true;
 	}
 
 	public String getName() {
@@ -47,6 +37,51 @@ public class Farm {
 
 	public void setName(String name) {
 		this.name = new String(name);
+	}
+
+	public void addHuman() {
+		System.out.println("Enter the human's name:");
+		String name = scan.next();
+		people.push(new Human(name));
+	}
+
+	public void removeHuman(Human hum) {
+		people.removeItem(hum);
+	}
+
+	public Human selectHuman() {
+		if (people.isEmpty()) {
+			System.out.println("There are no people to edit.");
+		} else {
+			System.out.println("Enter the id of the human:");
+			int choice = scan.nextInt() - 1;
+			return people.getItemAt(choice);
+		}
+		return null;
+	}
+
+	public void addEnclosure() {
+		System.out.println("Enter the enclosure's name:");
+		String name = scan.next();
+		enclosures.push(new Enclosure(name, scan));
+	}
+
+	public void listEnclosures() {
+		if (enclosures.isEmpty()) {
+			System.out.println("The farm is empty.");
+		} else {
+			System.out.println("\"" + getName() + "\"'s enclosures:");
+			System.out.print(enclosures);
+		}
+	}
+
+	public void listPeople() {
+		if (people.isEmpty()) {
+			System.out.println("No people in the farm.");
+		} else {
+			System.out.println("\"" + getName() + "\"'s people:");
+			System.out.print(people);
+		}
 	}
 
 	public Enclosure getEnclosure() {
@@ -59,6 +94,12 @@ public class Farm {
 		}
 		return null;
 	}
+
+	public void removeEnclosure(Enclosure enc) {
+		enclosures.removeItem(enc);
+	}
+
+	/* Farm Drawing */
 
 	public void drawFarm() {
 		System.out.println("\t" + name);

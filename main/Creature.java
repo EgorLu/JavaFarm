@@ -1,5 +1,7 @@
 package main;
 
+import java.util.Scanner;
+
 public abstract class Creature {
 
 	private String name;
@@ -47,34 +49,39 @@ public abstract class Creature {
 
 	/* Public methods */
 
-	public String getName() {
-		return name;
-	}
-
 	public String toString() {
 
 		return type + " named " + name;
 	}
 
+	public void rename(Scanner scan) {
+		System.out.println("Enter the new name:");
+		setName(scan.next());
+		System.out.println("Renamed to: " + getName());
+	}
+
 	public abstract <food> void eat(food f);
-	// TODO implement omnivore, carnivore and herbivore 
-	
+	// TODO implement omnivore, carnivore and herbivore
+
 	/* Private methods */
-	
+
 	protected <food> boolean omnivoreCheck(food f) {
 		return f.getClass().getSuperclass().getSuperclass().getSuperclass().getSimpleName().equals("Creature")
 				|| f.getClass().getSuperclass().getSuperclass().getSimpleName().equals("Plant");
 	}
-	
+
 	protected <food> boolean carnivoreCheck(food f) {
 		return f.getClass().getSuperclass().getSuperclass().getSuperclass().getSimpleName().equals("Creature");
 	}
-	
+
 	protected <food> boolean herbivoreCheck(food f) {
 		return f.getClass().getSuperclass().getSuperclass().getSimpleName().equals("Plant");
 	}
-	
+
 	/* Getter & Setters */
+	public String getName() {
+		return name;
+	}
 
 	public void setName(String name) {
 		this.name = name;
@@ -96,32 +103,26 @@ public abstract class Creature {
 		this.legs = legs;
 	}
 
-	
 	public String getType() {
 		return type;
 	}
-	
 
 	public void setType(String type) {
 		this.type = type;
 	}
-	
 
 	public int getAge() {
 		return age;
 	}
-	
 
 	public void setAge(int age) {
 		this.age = age;
 	}
 
-
 	public Enclosure getEnclosure() {
 		return enclosure;
 	}
 
-	
 	public void setEnclosure(Enclosure enclosure) {
 		this.enclosure = enclosure;
 	}
